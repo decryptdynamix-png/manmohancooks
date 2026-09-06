@@ -1,0 +1,285 @@
+# UAV Autonomous Path Planning using A* (A-Star)
+
+## Overview
+
+This project implements the **A\* (A-Star) pathfinding algorithm** for a UAV moving through a **2D grid environment**. The UAV travels from a start cell (`S`) to a goal cell (`G`) while avoiding obstacle cells (`#`).
+
+The implementation uses **4-directional movement** (Up, Down, Left, Right), with a movement cost of `1` per move. It uses **Manhattan Distance** as the heuristic.
+
+## Algorithm
+
+For each node:
+
+- `g(n)` = actual cost from the start node
+- `h(n)` = Manhattan-distance estimate to the goal
+- `f(n) = g(n) + h(n)`
+
+The program maintains:
+
+- **OPEN list** – nodes waiting to be evaluated, stored in a priority queue.
+- **CLOSED set** – nodes that have already been evaluated.
+
+The Manhattan heuristic is appropriate for the program's four-directional grid movement.
+
+## Features
+
+- A* pathfinding implementation.
+- Automatic detection of start (`S`) and goal (`G`) positions.
+- Obstacle and boundary checking.
+- Path reconstruction using parent nodes.
+- Reports path cost, explored-node count, and execution time.
+- Generates a PNG visualization for every test case.
+- Runs six predefined test environments.
+
+## Test Cases
+
+The program includes these six cases:
+
+1. **Simple Path (Assignment Sample)**
+2. **Multiple Possible Paths**
+3. **Narrow Passage**
+4. **Maze-like Obstacles**
+5. **No Path Exists**
+6. **Complex Environment**
+
+## Requirements
+
+- Python 3
+- `matplotlib`
+- `numpy`
+
+Install dependencies with:
+
+```bash
+pip install matplotlib numpy
+```
+
+## How to Run
+
+Place `uav_astar.py` and this `README.md` in the same directory, then run:
+
+```bash
+python uav_astar.py
+```
+
+The program prints the grid, start/goal positions, path information, number of explored nodes, and execution time. It also saves one PNG visualization per test case.
+
+## Output
+
+The following output was captured from the uploaded program:
+
+```text
+============================================================
+UAV AUTONOMOUS PATH PLANNING - A* ALGORITHM
+============================================================
+
+This program implements A* pathfinding for a UAV in a 2D grid.
+Movement: Up, Down, Left, Right (cost = 1 per move)
+Heuristic: Manhattan Distance (admissible for 4-directional grids)
+
+============================================================
+TEST CASE 1: Simple Path (Assignment Sample)
+============================================================
+Grid Layout:
+  S.......
+  ..###...
+  ....#...
+  .#..#...
+  .#......
+  .......G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: YES
+Path Coordinates: [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6), (5, 7)]
+Total Path Cost: 12
+Nodes Explored: 13
+Execution Time: 0.000046 seconds
+  [SAVED] Visualization: ./test_case_1_simple_path_assignment_sample.png
+
+============================================================
+TEST CASE 2: Multiple Possible Paths
+============================================================
+Grid Layout:
+  S.......
+  ........
+  ..#..#..
+  ..#..#..
+  ........
+  .......G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: YES
+Path Coordinates: [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6), (5, 7)]
+Total Path Cost: 12
+Nodes Explored: 13
+Execution Time: 0.000043 seconds
+  [SAVED] Visualization: ./test_case_2_multiple_possible_paths.png
+
+============================================================
+TEST CASE 3: Narrow Passage
+============================================================
+Grid Layout:
+  S..#....
+  ...#....
+  ...#....
+  ........
+  ...#....
+  ...#...G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: YES
+Path Coordinates: [(0, 0), (1, 0), (2, 0), (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (4, 4), (5, 4), (5, 5), (5, 6), (5, 7)]
+Total Path Cost: 12
+Nodes Explored: 19
+Execution Time: 0.000117 seconds
+  [SAVED] Visualization: ./test_case_3_narrow_passage.png
+
+============================================================
+TEST CASE 4: Maze-like Obstacles
+============================================================
+Grid Layout:
+  S#......
+  .#.####.
+  ......#.
+  .####.#.
+  ........
+  ######.G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: YES
+Path Coordinates: [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6), (5, 6), (5, 7)]
+Total Path Cost: 12
+Nodes Explored: 13
+Execution Time: 0.000033 seconds
+  [SAVED] Visualization: ./test_case_4_maze-like_obstacles.png
+
+============================================================
+TEST CASE 5: No Path Exists
+============================================================
+Grid Layout:
+  S..#....
+  ...#....
+  #######.
+  ...#....
+  ...#....
+  ...#...G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: NO
+Path Coordinates: None
+Total Path Cost: N/A
+Nodes Explored: 6
+Execution Time: 0.000022 seconds
+  [SAVED] Visualization: ./test_case_5_no_path_exists.png
+
+============================================================
+TEST CASE 6: Complex Environment
+============================================================
+Grid Layout:
+  S.#.....
+  ..#.#...
+  ....#.#.
+  .##...#.
+  ..#.#...
+  ....#..G
+
+Start Position: (0, 0)
+Goal Position:  (5, 7)
+
+--- RESULTS ---
+Path Found: YES
+Path Coordinates: [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2), (2, 3), (3, 3), (3, 4), (3, 5), (4, 5), (5, 5), (5, 6), (5, 7)]
+Total Path Cost: 12
+Nodes Explored: 21
+Execution Time: 0.000079 seconds
+  [SAVED] Visualization: ./test_case_6_complex_environment.png
+
+============================================================
+SUMMARY OF ALL TEST CASES
+============================================================
+Case   Name                           Found    Cost     Explored   Time (s)    
+--------------------------------------------------------------------------------
+1      Simple Path (Assignment Sample) YES      12       13         0.000046    
+2      Multiple Possible Paths        YES      12       13         0.000043    
+3      Narrow Passage                 YES      12       19         0.000117    
+4      Maze-like Obstacles            YES      12       13         0.000033    
+5      No Path Exists                 NO       N/A      6          0.000022    
+6      Complex Environment            YES      12       21         0.000079    
+
+All visualizations saved as PNG files in: ./
+
+A* Algorithm Implementation Complete!
+
+[stderr]
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 720, in _warm_feature_flows
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 704, in _warm_collaboration_flows
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py", line 32317, in hydrate_crdt_from_proto
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py", line 749, in __call__
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py", line 150, in call
+artifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.
+```
+
+## Generated Files
+
+For each test case, the program creates a PNG file named using this pattern:
+
+```text
+test_case_<number>_<case_name>.png
+```
+
+Example:
+
+```text
+test_case_1_simple_path_assignment_sample.png
+```
+
+## Visualization Legend
+
+- **Traversable** – empty grid cell
+- **Obstacle** – blocked cell (`#`)
+- **Explored** – cell expanded during A* search
+- **Path** – final path selected by A*
+- **Start** – `S`
+- **Goal** – `G`
+
+## Complexity
+
+The program documents a worst-case search complexity of approximately **O(b^d)** time and space, where:
+
+- `b` = branching factor
+- `d` = depth of the solution
+
+The heuristic helps guide the search toward the goal instead of exploring the grid uniformly.
+
+## Project Structure
+
+```text
+.
+├── uav_astar.py
+├── README.md
+├── output.txt
+└── test_case_*.png
+```
+
+## Conclusion
+
+The implementation demonstrates autonomous grid-based UAV path planning with A*. It provides both numerical results and visualizations, making it suitable for an assignment/demo on heuristic search and autonomous navigation.
